@@ -2,14 +2,14 @@
 
 const express = require("express");
 
-const server = express();
+const app = express();
 
-server.get('/home', (req, res)=> res.send("Welcome to WWYLTE"));
+app.get('/home', (req, res)=> res.send("Welcome to WWYLTE"));
 
-module.exports={
-    server: server,
-    start: (port)=>{
-        server.listen(port,()=> console.log(`listening on port ${port}`));
-    }
+function start () {
+    app.listen(process.env.PORT || 3001)
+    console.log(`Listening on port ${process.env.PORT}`);
 }
+
+module.exports= { start };
 
