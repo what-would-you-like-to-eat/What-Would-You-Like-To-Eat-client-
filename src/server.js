@@ -1,15 +1,29 @@
 'use strict';
 
 const express = require("express");
+const axios = require("axios");
+const app = express();
 
-const server = express();
+const YELP_API_URL = 'https://api.yelp.com/v3/businesses/search';
+const YELP_API_KEY= process.env.API_KEY;
 
-server.get('/home', (req, res)=> res.send("Welcome to WWYLTE"));
+app.use(express.json());
 
-module.exports={
-    server: server,
-    start: (port)=>{
-        server.listen(port,()=> console.log(`listening on port ${port}`));
+app.get("/api/yelp", async(req,res)=>{
+    try{
+        const { term, location, limit }=req.query;
+        const url = `${YELP_API_BASE_URL}?term=${term}&location=${location}&limit=${limit}`;
+        const headers ={
+            Authorization: `Bear ${YELP_API_KEY}`;
+        };
+
+        const response = await axios.get(url, { headers });
+        res.json(response.data);
+    } catch(error) {
+        console.error("Error with Data", error);
+        res.status(500).json({error:"Error fetching data"});
     }
-}
+});
 
+    const port = 3000;
+    app.listen(port,()=>console.log(`listening on ${port}`))
