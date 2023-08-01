@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use strict';
 
 const express = require("express");
@@ -26,3 +27,9 @@ app.get("/api/yelp", async(req,res)=>{
 
     const port = 3000;
     app.listen(port,()=>console.log(`listening on ${port}`))
+=======
+require('dotenv').config();
+const { start } =require("./src/server");
+
+start();
+>>>>>>> refs/remotes/origin/main
